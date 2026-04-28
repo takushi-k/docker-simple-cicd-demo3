@@ -16,13 +16,13 @@ permissions:
 jobs:
   web-test-build-image:
     name: Web Container - Test and Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     defaults:
       run:
         working-directory: web
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build an Image and Run Tests
         run: |
           docker image build --target production -t temp_web_image_name:latest --build-arg REACT_APP_API_SERVER=/api .
@@ -48,14 +48,14 @@ jobs:
 
   api-test-build-image:
     name: API Container - Test and Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     defaults:
       run:
         working-directory: api
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build an Image and Run Tests
         run: |
@@ -82,12 +82,12 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [web-test-build-image, api-test-build-image]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
